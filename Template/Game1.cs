@@ -2,20 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-
-
+using System.Collections.Generic;
 
 
 
 namespace Pong
-
-
-
 {
 
-
-
-    /// <summary>
+     /// <summary>
 
 
 
@@ -34,38 +28,22 @@ namespace Pong
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-
-        Paddle leftPaddle;
+        Paddle lefPaddle;
         Paddle rightPaddle;
+
         Ball ball1;
 
 
-        //KOmentar
-
-
-
         public Game1()
-
-
-
         {
-
 
 
             graphics = new GraphicsDeviceManager(this);
 
 
-
             Content.RootDirectory = "Content";
 
-
-
         }
-
-
-
-
-
 
 
         /// <summary>
@@ -93,35 +71,14 @@ namespace Pong
 
 
         protected override void Initialize()
-
-
-
         {
-
-            graphics.PreferredBackBufferHeight = 680;
-            graphics.PreferredBackBufferWidth = 1200;
-            graphics.ApplyChanges();
-
-
 
             // TODO: Add your initialization logic here
 
-
-
-
-
-
-
-            base.Initialize();
-
+          base.Initialize();
 
 
         }
-
-
-
-
-
 
 
         /// <summary>
@@ -141,34 +98,18 @@ namespace Pong
 
 
         protected override void LoadContent()
-
-
-
         {
 
-            leftPaddle = new Paddle(Content.Load<Texture2D>("Paddle"));
-            rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"));
-            ball1 = new Ball(Content.Load<Texture2D>("Ball"));
+            lefPaddle = new Paddle(Content.Load<Texture2D>("Paddle"),new Vector2(0, 340), Keys.W, Keys.S);
+            rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(779, 340), Keys.Up, Keys.Down);      
 
-            leftPaddle.LoadContent(leftPaddle, rightPaddle);
-            rightPaddle.LoadContent(leftPaddle, rightPaddle);
-            ball1.LoadContent(ball1);
+            ball1 = new Ball(Content.Load<Texture2D>("Ball"), new Vector2((Window.ClientBounds.Width / 2) - 5, (Window.ClientBounds.Height / 2) - 5));
 
-
-
-
-
+           
 
             // Create a new SpriteBatch, which can be used to draw textures.
 
-
-
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-
-
-
-
 
 
             // TODO: use this.Content to load your game content here 
@@ -176,14 +117,6 @@ namespace Pong
 
 
         }
-
-
-
-
-
-
-
-
 
         /// <summary>
 
@@ -202,24 +135,11 @@ namespace Pong
 
 
         protected override void UnloadContent()
-
-
-
         {
 
-
-
-            // TODO: Unload any non ContentManager content here
-
-
+           // TODO: Unload any non ContentManager content here
 
         }
-
-
-
-
-
-
 
         /// <summary>
 
@@ -242,38 +162,23 @@ namespace Pong
 
 
         protected override void Update(GameTime gameTime)
-
-
-
         {
-            KeyboardState kstate = Keyboard.GetState();
-
-            rightPaddle.Update(leftPaddle, rightPaddle, kstate);
-            leftPaddle.Update(leftPaddle, rightPaddle, kstate);
-            //    ball1.Update(ball1, velocity);
-
-
-
+              
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-
                 Exit();
-
             }
 
 
+            ball1.Update();
+            lefPaddle.Update();
+            rightPaddle.Update();
+            ball1.Colission(lefPaddle, rightPaddle);
+
             base.Update(gameTime);
 
-
-
         }
-
-
-
-
-
-
 
         /// <summary>
 
@@ -292,32 +197,18 @@ namespace Pong
 
 
         protected override void Draw(GameTime gameTime)
-
-
-
         {
-
-
 
             GraphicsDevice.Clear(Color.White);
 
-
-
             spriteBatch.Begin();
 
-
-            leftPaddle.Draw(spriteBatch);
             rightPaddle.Draw(spriteBatch);
+            lefPaddle.Draw(spriteBatch);
+
             ball1.Draw(spriteBatch);
 
-
-
             spriteBatch.End();
-
-
-
-
-
 
 
             // TODO: Add your drawing code here.

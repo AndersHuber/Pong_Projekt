@@ -1,111 +1,96 @@
-﻿
-
-using System;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Input;
 
 using Microsoft.Xna.Framework.Graphics;
 
-using System.Collections.Generic;
-
-using System.Linq;
-
-using System.Text;
-
-using System.Threading.Tasks;
-
-
 namespace Pong
 
 {
-
-    class Paddle
-
-
-
+    class Ball
     {
 
-        private Texture2D paddle;
-        public Vector2 paddlePos;
-        private float fart = 5;
-        private Rectangle paddleHitbox;
+        private Texture2D ball;
+        private Vector2 ballPos;
+        private Rectangle ballHitbox;
+        private Vector2 velocity = new Vector2(4, 4);
 
 
-
-
-
-
-
-        public Paddle(Texture2D paddle)
-
+        public Ball(Texture2D ball, Vector2 ballPos)
         {
 
-            this.paddle = paddle;
-
-
+            this.ball = ball;
+            this.ballPos = ballPos;
 
         }
 
-
-        public void LoadContent(Paddle leftPaddle, Paddle rightPaddle)
+        public Texture2D Boll
         {
 
-            leftPaddle.paddlePos.X = 0;
-            leftPaddle.paddlePos.Y = 340;
-
-            rightPaddle.paddlePos.X = 1179;
-            rightPaddle.paddlePos.Y = 340;
-
+            get { return ball; }
+            set { ball = value; }
 
         }
 
-        public Rectangle PaddleHitbox
+        public Vector2 BallPos
         {
 
-            get { return new Rectangle((int)paddlePos.X, (int)paddlePos.Y, 21, 148); }
-            set { paddleHitbox = value; }
+            get { return ballPos; }
+            set { ballPos = value; }
+
+        }
+
+        public Rectangle BallHitbox
+        {
+
+            get { return new Rectangle((int)ballPos.X, (int)ballPos.Y, 19, 19); }
+            set { ballHitbox = value; }
 
         }
 
 
 
-        public void Update(Paddle leftPaddle, Paddle rightPaddle, KeyboardState kstate)
+        public void Update()
         {
 
+             ballPos.X += velocity.X;
+             ballPos.Y += velocity.Y;
 
-            if (kstate.IsKeyDown(Keys.Up))
+
+            if (ballPos.X <= 0)
+                velocity.X *= -1;
+
+            if (ballPos.Y <= 0)
+                velocity.Y *= -1;
+
+            if (ballPos.X >= 779)
+                velocity.X *= -1;
+
+            if (ballPos.Y >= 480 - 19)
+                velocity.Y *= -1;
+
+
+            ballHitbox.Location = ballPos.ToPoint();
+
+        }
+
+
+       public void Colission(Paddle leftPaddle, Paddle rightPaddle)
+        {
+
+            if(ballHitbox.Intersects(leftPaddle))
             {
-                rightPaddle.paddlePos.Y -= fart;
+
+               velocity.X *= -1;
+
             }
 
-            if (kstate.IsKeyDown(Keys.Down))
-            {
-                rightPaddle.paddlePos.Y += fart;
-            }
 
-            if (kstate.IsKeyDown(Keys.W))
-            {
-                leftPaddle.paddlePos.Y -= fart;
-            }
-
-            if (kstate.IsKeyDown(Keys.S))
-            {
-                leftPaddle.paddlePos.Y += fart;
-            }
-
-            if (paddlePos.Y <= 0)
-            {
-                paddlePos.Y = 0;
-            }
-
-            if (paddlePos.Y >= 1052)
-            {
-                paddlePos.Y = 340;
-            }
-
-            paddleHitbox.Location = paddlePos.ToPoint();
 
         }
 
@@ -113,25 +98,11 @@ namespace Pong
         public void Draw(SpriteBatch spriteBatch)
         {
 
-
-            spriteBatch.Draw(paddle, paddlePos, Color.White);
-
+            spriteBatch.Draw(ball, ballPos, Color.White);
 
         }
 
 
 
-
-
-
-
-
-
     }
-
-
-
 }
-
-
-

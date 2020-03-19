@@ -1,104 +1,102 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using System;
+
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Input;
 
 using Microsoft.Xna.Framework.Graphics;
 
+using System.Collections.Generic;
+
+using System.Linq;
+
+using System.Text;
+
+using System.Threading.Tasks;
+
+
 namespace Pong
 
 {
-    class Ball
+
+    class Paddle
     {
 
-        private Texture2D ball;
-        private Vector2 ballPos;
-        private Rectangle ballHitbox;
-        public float velocity = 6;
+        private Texture2D paddle;
+        private Vector2 paddlePos;
+        private float fart = 5;
+        private Rectangle paddleHitbox;
+        private KeyboardState kstate = Keyboard.GetState();
+        private Keys Up, Down;
 
 
-
-
-        public Ball(Texture2D ball)
+        public Paddle(Texture2D paddel, Vector2 paddlePos, Keys Up, Keys Down)
         {
-
-            this.ball = ball;
-
-        }
-
-        public Texture2D Boll
-        {
-
-            get { return ball; }
-            set { ball = value; }
-
-        }
-
-        public Rectangle BallHitbox
-        {
-
-            get { return new Rectangle((int)ballPos.X, (int)ballPos.Y, 19, 19); }
-            set { ballHitbox = value; }
-
+            paddle = paddel;
+            this.paddlePos = paddlePos;
+            this.Up = Up;
+            this.Down = Down;
         }
 
 
-        public void LoadContent(Ball ball1)
+        public Rectangle PaddleHitbox
         {
 
-            ball1.ballPos.X = 340;
-            ball1.ballPos.Y = 600;
+            get { return new Rectangle((int)paddlePos.X, (int)paddlePos.Y, 21, 148); }
+            set { paddleHitbox = value; }
+
+        }
+
+        public Vector2 PaddlePos
+        {
+
+            get { return paddlePos; }
+            set { paddlePos = value; }
 
         }
 
 
-        public void Update(Ball ball1, float velocity)
+        public void Update()
         {
-
-            ball1.ballPos.X += velocity;
-            ball1.ballPos.Y += velocity;
-
-            if (ballPos.Y > 1179)
+            if (kstate.IsKeyDown(Up))
             {
-                velocity *= -1;
-
+                paddlePos.Y += fart;
             }
 
-            if (ballPos.Y < 0)
+            if (kstate.IsKeyDown(Down))
             {
-                velocity *= -1;
-            }
+                paddlePos.Y -= fart;
+            }          
 
-            if (ballPos.X <= 0)
-            {
-
-
-            }
-
-            if (ballPos.X > 1200)
-            {
-
-
-            }
-
-
-            ballHitbox.Location = ballPos.ToPoint();
-
+            paddleHitbox.Location = paddlePos.ToPoint();
         }
 
 
         public void Draw(SpriteBatch spriteBatch)
         {
 
-            spriteBatch.Draw(ball, ballPos, Color.White);
+
+            spriteBatch.Draw(paddle, paddlePos, Color.White);
+           
+
 
         }
 
 
 
+
+
+
+
+
+
     }
+
+
+
 }
+
+
+
