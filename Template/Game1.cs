@@ -30,9 +30,8 @@ namespace Pong
 
         Paddle lefPaddle;
         Paddle rightPaddle;
-
         Ball ball1;
-
+      
 
         public Game1()
         {
@@ -100,12 +99,15 @@ namespace Pong
         protected override void LoadContent()
         {
 
+      
+
             lefPaddle = new Paddle(Content.Load<Texture2D>("Paddle"),new Vector2(0, 340), Keys.W, Keys.S);
             rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(779, 340), Keys.Up, Keys.Down);      
 
             ball1 = new Ball(Content.Load<Texture2D>("Ball"), new Vector2((Window.ClientBounds.Width / 2) - 5, (Window.ClientBounds.Height / 2) - 5));
 
-           
+            
+
 
             // Create a new SpriteBatch, which can be used to draw textures.
 
@@ -163,7 +165,7 @@ namespace Pong
 
         protected override void Update(GameTime gameTime)
         {
-              
+
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
@@ -174,7 +176,24 @@ namespace Pong
             ball1.Update();
             lefPaddle.Update();
             rightPaddle.Update();
-            ball1.Colission(lefPaddle, rightPaddle);
+
+
+
+            if (ball1.BallHitbox.Intersects(lefPaddle.PaddleHitbox))
+            {
+                ball1.Colission();
+
+            }
+
+            if (ball1.BallHitbox.Intersects(rightPaddle.PaddleHitbox))
+            {
+
+                ball1.Colission();
+
+            }
+
+         
+
 
             base.Update(gameTime);
 

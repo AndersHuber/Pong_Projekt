@@ -18,14 +18,42 @@ namespace Pong
         private Texture2D ball;
         private Vector2 ballPos;
         private Rectangle ballHitbox;
-        private Vector2 velocity = new Vector2(4, 4);
+        private Vector2 velocity;
+        public Random random = new Random();
+        private int tal;
+        private int score1;
+        private int score2;
 
-
-        public Ball(Texture2D ball, Vector2 ballPos)
+        public Ball(Texture2D ball, Vector2 ballPos, int score1, int score2)
         {
 
             this.ball = ball;
             this.ballPos = ballPos;
+            this.score1 = score1;
+            this.score2 = score2;
+
+            tal = random.Next(1, 3);
+
+            if (tal == 1)
+            {
+                velocity = new Vector2(-4, -4);
+            }
+
+            if (tal == 2)
+            {
+                velocity = new Vector2(4, 4);
+            }
+
+            if (score1 == 3)
+            {
+
+            }
+
+            if (score2 == 3)
+            {
+
+
+            }
 
         }
 
@@ -55,42 +83,55 @@ namespace Pong
 
 
 
+        public void Colission()
+        {
+            velocity.X *= -1;
+
+        }
+
+
         public void Update()
         {
 
              ballPos.X += velocity.X;
              ballPos.Y += velocity.Y;
+             
 
 
             if (ballPos.X <= 0)
-                velocity.X *= -1;
-
-            if (ballPos.Y <= 0)
-                velocity.Y *= -1;
-
-            if (ballPos.X >= 779)
-                velocity.X *= -1;
-
-            if (ballPos.Y >= 480 - 19)
-                velocity.Y *= -1;
-
-
-            ballHitbox.Location = ballPos.ToPoint();
-
-        }
-
-
-       public void Colission(Paddle leftPaddle, Paddle rightPaddle)
-        {
-
-            if(ballHitbox.Intersects(leftPaddle))
             {
-
-               velocity.X *= -1;
-
+                velocity.X *= -1;
             }
 
+            if (ballPos.Y <= 0)
+            {
+                velocity.Y *= -1;
+            }
 
+            if (ballPos.X >= 779)
+            {
+                velocity.X *= -1;
+            }
+
+            if (ballPos.Y >= 480 - 19)
+            {
+                velocity.Y *= -1;
+            }
+
+            //Score
+            if (ballPos.X < 0)
+            {
+                score1++;
+            }
+
+            if (ballPos.X > 785)
+            {
+                score2++;
+            }
+
+        
+
+            ballHitbox.Location = ballPos.ToPoint();
 
         }
 

@@ -28,7 +28,7 @@ namespace Pong
         private Vector2 paddlePos;
         private float fart = 5;
         private Rectangle paddleHitbox;
-        private KeyboardState kstate = Keyboard.GetState();
+        private KeyboardState kstate;
         private Keys Up, Down;
 
 
@@ -58,19 +58,37 @@ namespace Pong
         }
 
 
+
         public void Update()
         {
+
+            kstate= Keyboard.GetState();
+
             if (kstate.IsKeyDown(Up))
             {
-                paddlePos.Y += fart;
+                paddlePos.Y -= fart;
             }
 
             if (kstate.IsKeyDown(Down))
             {
-                paddlePos.Y -= fart;
-            }          
+                paddlePos.Y += fart;
+            }   
+          
+            if(paddlePos.Y < 0)
+            {
+
+                paddlePos.Y = 0;
+
+            }
+
+            if(paddlePos.Y > 332)
+            {
+
+                paddlePos.Y = 332;
+            }
 
             paddleHitbox.Location = paddlePos.ToPoint();
+
         }
 
 
