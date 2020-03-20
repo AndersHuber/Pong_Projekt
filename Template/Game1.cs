@@ -28,6 +28,7 @@ namespace Pong
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //Skapar objekten för paddlar och boll
         Paddle lefPaddle;
         Paddle rightPaddle;
         Ball ball1;
@@ -100,7 +101,7 @@ namespace Pong
         {
 
       
-
+            //Ger objekten värden, en Texture2D, positioner samt input för tangentbord
             lefPaddle = new Paddle(Content.Load<Texture2D>("Paddle"),new Vector2(0, 340), Keys.W, Keys.S);
             rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(779, 340), Keys.Up, Keys.Down);      
 
@@ -172,13 +173,13 @@ namespace Pong
                 Exit();
             }
 
-
+            //Update metoder som ständigt anropas från respektive klasser
             ball1.Update();
             lefPaddle.Update();
             rightPaddle.Update();
 
 
-
+            //Bollens kolission med paddlarna, anropar boll klassen ifall true
             if (ball1.BallHitbox.Intersects(lefPaddle.PaddleHitbox))
             {
                 ball1.Colission();
@@ -222,9 +223,9 @@ namespace Pong
 
             spriteBatch.Begin();
 
+            //Ritar ut paddlar och boll
             rightPaddle.Draw(spriteBatch);
             lefPaddle.Draw(spriteBatch);
-
             ball1.Draw(spriteBatch);
 
             spriteBatch.End();
