@@ -14,24 +14,23 @@ namespace Pong
 {
     class Ball
     {
-
+        //Instansvariabler för klassen
         private Texture2D ball;
-        private Vector2 ballPos;
+        private Vector2 ballPos, velocity;
         private Rectangle ballHitbox;
-        private Vector2 velocity;
+        //Slumpar fram tal som slumpar riktning på boll
         public Random random = new Random();
         private int tal;
-        private int score1;
-        private int score2;
+        //Poäng
+        private int score1, score2 = 0;
 
-        public Ball(Texture2D ball, Vector2 ballPos, int score1, int score2)
+        //Konstruktor som tar Texture2D och position som parametrar
+        public Ball(Texture2D ball, Vector2 ballPos)
         {
 
             this.ball = ball;
             this.ballPos = ballPos;
-            this.score1 = score1;
-            this.score2 = score2;
-
+         
             tal = random.Next(1, 3);
 
             if (tal == 1)
@@ -43,20 +42,10 @@ namespace Pong
             {
                 velocity = new Vector2(4, 4);
             }
-
-            if (score1 == 3)
-            {
-
-            }
-
-            if (score2 == 3)
-            {
-
-
-            }
-
+ 
         }
 
+        //Get, Set metoder som returnerar variablerna och sätter deras värden
         public Texture2D Boll
         {
 
@@ -73,6 +62,7 @@ namespace Pong
 
         }
 
+        //Sätter ballHitboxens värde i rektangeln
         public Rectangle BallHitbox
         {
 
@@ -82,7 +72,7 @@ namespace Pong
         }
 
 
-
+        //Ifall main anropar denna så har bollen träffat en paddel
         public void Colission()
         {
             velocity.X *= -1;
@@ -90,6 +80,7 @@ namespace Pong
         }
 
 
+        //Bollens hastighet, riktning och begränsningar
         public void Update()
         {
 
@@ -97,20 +88,9 @@ namespace Pong
              ballPos.Y += velocity.Y;
              
 
-
-            if (ballPos.X <= 0)
-            {
-                velocity.X *= -1;
-            }
-
             if (ballPos.Y <= 0)
             {
                 velocity.Y *= -1;
-            }
-
-            if (ballPos.X >= 779)
-            {
-                velocity.X *= -1;
             }
 
             if (ballPos.Y >= 480 - 19)
@@ -119,23 +99,26 @@ namespace Pong
             }
 
             //Score
-            if (ballPos.X < 0)
+           
+
+            if (score1 == 3)
             {
-                score1++;
+
             }
 
-            if (ballPos.X > 785)
+            if (score2 == 3)
             {
-                score2++;
+
             }
 
-        
+
+
 
             ballHitbox.Location = ballPos.ToPoint();
 
         }
 
-
+        //Main anropar metoden för att rita ut bollen, tar texturen, positionen och färgen
         public void Draw(SpriteBatch spriteBatch)
         {
 
