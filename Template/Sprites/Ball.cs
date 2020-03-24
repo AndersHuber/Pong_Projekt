@@ -21,8 +21,6 @@ namespace Pong
         //Slumpar fram tal som slumpar riktning på boll
         public Random random = new Random();
         private int tal;
-        //Poäng
-        private int score1, score2 = 0;
 
         //Konstruktor som tar Texture2D och position som parametrar
         public Ball(Texture2D ball, Vector2 ballPos)
@@ -97,22 +95,6 @@ namespace Pong
             {
                 velocity.Y *= -1;
             }
-
-            //Score
-           
-
-            if (score1 == 3)
-            {
-
-            }
-
-            if (score2 == 3)
-            {
-
-            }
-
-
-
 
             ballHitbox.Location = ballPos.ToPoint();
 

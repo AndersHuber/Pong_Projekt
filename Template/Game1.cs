@@ -31,8 +31,8 @@ namespace Pong
         //Skapar objekten för paddlar och boll
         private Paddle lefPaddle;
         private Paddle rightPaddle;
+        private Score score1, score2;
         private Ball ball1;
-        private int score1, score2;
 
 
         public Game1()
@@ -104,12 +104,11 @@ namespace Pong
       
             //Ger objekten värden, en Texture2D, positioner samt input för tangentbord
             lefPaddle = new Paddle(Content.Load<Texture2D>("Paddle"),new Vector2(0, 340), Keys.W, Keys.S);
-            rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(779, 340), Keys.Up, Keys.Down);      
+            rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(779, 340), Keys.Up, Keys.Down);
+
+            score1 = new Score(Content.Load<SpriteFont>("SpriteFont/Score1"), new Vector2(200, 200));
 
             ball1 = new Ball(Content.Load<Texture2D>("Ball"), new Vector2((Window.ClientBounds.Width / 2) - 5, (Window.ClientBounds.Height / 2) - 5));
-
-            score1 = 0;
-            score2 = 0;
 
 
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -176,10 +175,10 @@ namespace Pong
             }
 
 
-            Reset();
+     
 
-            if (score1 != 3 || score2 != 3)
-            {
+     
+         
                 //Update metoder som ständigt anropas från respektive klasser
                 ball1.Update();
                 lefPaddle.Update();
@@ -202,7 +201,7 @@ namespace Pong
 
 
                 base.Update(gameTime);
-            }
+           
 
         }
 
@@ -233,6 +232,7 @@ namespace Pong
             rightPaddle.Draw(spriteBatch);
             lefPaddle.Draw(spriteBatch);
             ball1.Draw(spriteBatch);
+            score1.Draw(spriteBatch);
 
             spriteBatch.End();
 
@@ -248,32 +248,6 @@ namespace Pong
             base.Draw(gameTime);
 
 
-
-        }
-
-
-
-        public void Reset()
-        {
-
-
-            if (ball1.BallPos.X >= 785)
-            {
-                score2++;
-                ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 5, (Window.ClientBounds.Height / 2) - 5);
-                lefPaddle.PaddlePos = new Vector2(0, 340);
-                rightPaddle.PaddlePos = new Vector2(779, 340);
-            }
-
-            if (ball1.BallPos.X <= 0)
-            {
-                score1++;
-                ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 5, (Window.ClientBounds.Height / 2) - 5);
-                lefPaddle.PaddlePos = new Vector2(0, 340);
-                rightPaddle.PaddlePos = new Vector2(779, 340);
-
-            }
-         
 
         }
 

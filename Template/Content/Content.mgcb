@@ -49,6 +49,13 @@
 /processorParam:TextureFormat=Color
 /build:Paddle.png
 
+#begin SpriteFont/Score1.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:SpriteFont/Score1.spritefont
+
 #begin VictoryScreen.png
 /importer:TextureImporter
 /processor:TextureProcessor

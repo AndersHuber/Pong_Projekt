@@ -11,49 +11,37 @@ namespace Pong
     class Score
     {
 
-        private int score1;
-        private int score2;
+        private int score1, score2 = 0;
         private SpriteFont nummer;
+        private Vector2 fontPos;
 
 
-        public Score(SpriteFont nummer)
-
+        public Score(SpriteFont nummer, Vector2 fontPos)
         {
             this.nummer = nummer;
+            this.fontPos = fontPos;
         }
 
-        public void Update(Ball ball1)
+        public Vector2 FontPos
         {
-
-            if (ball1.BallPos.X < 0)
-            {
-                score1++;
-            }
-
-            if (ball1.BallPos.X > 785)
-            {
-                score2++;
-            }
-
-            if(score1 == 3)
-            {
-
-            }
-
-            if(score2 == 3)
-            {
+            get { return fontPos; }
+            set { fontPos = value; }
 
 
-            }
+        }
+
+
+      public void Update()
+        {
 
         }
 
 
 
-        public void Draw(SpriteFont nummer)
+        public void Draw(SpriteBatch spriteBatch)
         {
 
-          
+            spriteBatch.DrawString(nummer, "1", fontPos, Color.Black);
 
 
         }
