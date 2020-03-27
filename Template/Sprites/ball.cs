@@ -16,15 +16,11 @@ namespace Pong
     {
         //Instansvariabler för klassen
         private Texture2D ball;
-        private Vector2 ballPos;
+        private Vector2 ballPos, velocity;
         private Rectangle ballHitbox;
-        private Vector2 velocity;
         //Slumpar fram tal som slumpar riktning på boll
         public Random random = new Random();
         private int tal;
-        //Poäng
-        private int score1 = 0;
-        private int score2 = 0;
 
         //Konstruktor som tar Texture2D och position som parametrar
         public Ball(Texture2D ball, Vector2 ballPos)
@@ -44,18 +40,7 @@ namespace Pong
             {
                 velocity = new Vector2(4, 4);
             }
-
-            if (score1 == 3)
-            {
-
-            }
-
-            if (score2 == 3)
-            {
-
-
-            }
-
+ 
         }
 
         //Get, Set metoder som returnerar variablerna och sätter deras värden
@@ -101,39 +86,15 @@ namespace Pong
              ballPos.Y += velocity.Y;
              
 
-
-            if (ballPos.X <= 0)
-            {
-                velocity.X *= -1;
-            }
-
             if (ballPos.Y <= 0)
             {
                 velocity.Y *= -1;
-            }
-
-            if (ballPos.X >= 779)
-            {
-                velocity.X *= -1;
             }
 
             if (ballPos.Y >= 480 - 19)
             {
                 velocity.Y *= -1;
             }
-
-            //Score
-            if (ballPos.X < 0)
-            {
-                score1++;
-            }
-
-            if (ballPos.X > 785)
-            {
-                score2++;
-            }
-
-        
 
             ballHitbox.Location = ballPos.ToPoint();
 

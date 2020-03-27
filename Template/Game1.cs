@@ -29,9 +29,9 @@ namespace Pong
         SpriteBatch spriteBatch;
 
         //Skapar objekten för paddlar och boll
-        private Paddle lefPaddle;
+        private Paddle leftPaddle;
         private Paddle rightPaddle;
-        private Score score1, score2;
+        private Score score1;
         private Ball ball1;
 
 
@@ -103,10 +103,11 @@ namespace Pong
 
       
             //Ger objekten värden, en Texture2D, positioner samt input för tangentbord
-            lefPaddle = new Paddle(Content.Load<Texture2D>("Paddle"),new Vector2(0, 340), Keys.W, Keys.S);
+            leftPaddle = new Paddle(Content.Load<Texture2D>("Paddle"),new Vector2(0, 340), Keys.W, Keys.S);
             rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(779, 340), Keys.Up, Keys.Down);
 
-            score1 = new Score(Content.Load<SpriteFont>("SpriteFont/Score1"), new Vector2(200, 200));
+         
+            score1 = new Score(Content.Load<SpriteFont>("SpriteFont/Score1"), new Vector2(150, 15), false);
 
             ball1 = new Ball(Content.Load<Texture2D>("Ball"), new Vector2((Window.ClientBounds.Width / 2) - 5, (Window.ClientBounds.Height / 2) - 5));
 
@@ -164,29 +165,21 @@ namespace Pong
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
 
 
-
         protected override void Update(GameTime gameTime)
         {
+  
+               score1.Update(leftPaddle, rightPaddle, ball1, Window);
 
-
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (score1.Pause == false)
             {
-                Exit();
-            }
-
-
-     
-
-     
-         
                 //Update metoder som ständigt anropas från respektive klasser
                 ball1.Update();
-                lefPaddle.Update();
+                leftPaddle.Update();
                 rightPaddle.Update();
 
 
                 //Bollens kolission med paddlarna, anropar boll klassen ifall true
-                if (ball1.BallHitbox.Intersects(lefPaddle.PaddleHitbox))
+                if (ball1.BallHitbox.Intersects(leftPaddle.PaddleHitbox))
                 {
                     ball1.Colission();
 
@@ -199,12 +192,10 @@ namespace Pong
 
                 }
 
+            }
 
-                base.Update(gameTime);
-           
-
+                base.Update(gameTime);         
         }
-
         /// <summary>
 
 
@@ -230,25 +221,17 @@ namespace Pong
 
             //Ritar ut paddlar och boll
             rightPaddle.Draw(spriteBatch);
-            lefPaddle.Draw(spriteBatch);
+            leftPaddle.Draw(spriteBatch);
+
             ball1.Draw(spriteBatch);
-            score1.Draw(spriteBatch);
+
+            score1.Draw(spriteBatch, Window);
 
             spriteBatch.End();
 
-
             // TODO: Add your drawing code here.
 
-
-
-
-
-
-
             base.Draw(gameTime);
-
-
-
         }
 
 
@@ -258,6 +241,3 @@ namespace Pong
 
 
 }
-
-
-
