@@ -1,7 +1,7 @@
 ﻿using System;
 using Pong;
 
-namespace Template
+namespace Pong
 {
 #if WINDOWS || LINUX
     /// <summary>
@@ -16,7 +16,10 @@ namespace Template
         static void Main()
         {
             using (var game = new Game1())
+            {
                 game.Run();
+
+            }
         }
     }
 #endif

@@ -31,8 +31,14 @@ namespace Pong
         //Skapar objekten för paddlar och boll
         private Paddle leftPaddle;
         private Paddle rightPaddle;
+
         private Score score1;
+
         private Ball ball1;
+
+        private Background backGround1;
+
+        private Meny menuScreen;
 
 
         public Game1()
@@ -111,6 +117,9 @@ namespace Pong
 
             ball1 = new Ball(Content.Load<Texture2D>("Ball"), new Vector2((Window.ClientBounds.Width / 2) - 5, (Window.ClientBounds.Height / 2) - 5));
 
+            backGround1 = new Background(Content.Load<Texture2D>("BackGround"), new Vector2(0, 0));
+
+            menuScreen = new Meny(Content.Load<Texture2D>("Menu/Menu"), new Vector2(0, 0), true);
 
             // Create a new SpriteBatch, which can be used to draw textures.
 
@@ -167,28 +176,32 @@ namespace Pong
 
         protected override void Update(GameTime gameTime)
         {
-  
-               score1.Update(leftPaddle, rightPaddle, ball1, Window);
 
-            if (score1.Pause == false)
-            {
-                //Update metoder som ständigt anropas från respektive klasser
-                ball1.Update();
-                leftPaddle.Update();
-                rightPaddle.Update();
-
-
-                //Bollens kolission med paddlarna, anropar boll klassen ifall true
-                if (ball1.BallHitbox.Intersects(leftPaddle.PaddleHitbox))
+            if (menuScreen.GameState != true)
+            {             
+                if (score1.Pause == false)
                 {
-                    ball1.Colission();
+                    score1.Update(leftPaddle, rightPaddle, ball1, Window);
 
-                }
+                    //Update metoder som ständigt anropas från respektive klasser
+                    ball1.Update();
+                    leftPaddle.Update();
+                    rightPaddle.Update();
 
-                if (ball1.BallHitbox.Intersects(rightPaddle.PaddleHitbox))
-                {
 
-                    ball1.Colission();
+                    //Bollens kolission med paddlarna, anropar boll klassen ifall true
+                    if (ball1.BallHitbox.Intersects(leftPaddle.PaddleHitbox))
+                    {
+                        ball1.Colission();
+
+                    }
+
+                    if (ball1.BallHitbox.Intersects(rightPaddle.PaddleHitbox))
+                    {
+
+                        ball1.Colission();
+
+                    }
 
                 }
 
@@ -219,13 +232,20 @@ namespace Pong
 
             spriteBatch.Begin();
 
-            //Ritar ut paddlar och boll
-            rightPaddle.Draw(spriteBatch);
-            leftPaddle.Draw(spriteBatch);
+            menuScreen.Draw(spriteBatch);
 
-            ball1.Draw(spriteBatch);
+            if (menuScreen.GameState != true)
+            {
+                backGround1.Draw(spriteBatch);
 
-            score1.Draw(spriteBatch, Window);
+                //Ritar ut paddlar och boll
+                rightPaddle.Draw(spriteBatch);
+                leftPaddle.Draw(spriteBatch);
+
+                ball1.Draw(spriteBatch);
+
+                score1.Draw(spriteBatch, Window);
+            }
 
             spriteBatch.End();
 
