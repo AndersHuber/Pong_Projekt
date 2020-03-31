@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Input;
 
 namespace Pong
 {
@@ -12,11 +8,18 @@ namespace Pong
     {
         private Texture2D backGround;
         private Vector2 backGroundPos;
+        private Rectangle backGroundHitbox;
+        private bool intersect, b1, b2, b3, b4, b5;
+        private MouseState state;
+        private Point mousePos;
+        
 
-        public Background(Texture2D backGround, Vector2 backGroundPos)
+        public Background(Texture2D backGround, Vector2 backGroundPos, Rectangle backGroundHitbox, bool Intersect)
         {
             this.backGround = backGround;
             this.backGroundPos = backGroundPos;
+            this.intersect = Intersect;
+            this.backGroundHitbox = backGroundHitbox;
         }
 
         public Texture2D BackGround
@@ -31,9 +34,40 @@ namespace Pong
             set { backGroundPos = value; }
         }
 
+        public Rectangle BackGroundHitbox
+        {
+            get { return backGroundHitbox; }
+            set { backGroundHitbox = value; }
+        }
+
+        public bool Intersect
+        {
+            get { return intersect; }
+            set { intersect = value; }
+        }
+
+        public void Update()
+        {
+
+            state = Mouse.GetState();
+            mousePos = new Point(state.X, state.Y);
+
+            if (backGroundHitbox.Contains(mousePos))
+            {
+                if (state.LeftButton == ButtonState.Pressed)
+                {
+                    intersect = true;
+                }
+
+            }
+
+            backGroundHitbox.Location = backGroundPos.ToPoint();
+                      
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(backGround, backGroundPos, Color.White);
+            spriteBatch.Draw(backGround, BackGroundHitbox, Color.White);
         }
 
 

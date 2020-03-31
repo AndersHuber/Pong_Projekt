@@ -36,7 +36,7 @@ namespace Pong
 
         private Ball ball1;
 
-        private Background backGround1;
+        private Background backGround1, backGround2, backGround3, backGround4, backGround5;
 
         private Meny menuScreen;
 
@@ -49,6 +49,8 @@ namespace Pong
 
 
             Content.RootDirectory = "Content";
+
+            IsMouseVisible = true;
 
         }
 
@@ -112,12 +114,21 @@ namespace Pong
             leftPaddle = new Paddle(Content.Load<Texture2D>("Paddle"),new Vector2(0, 340), Keys.W, Keys.S);
             rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(779, 340), Keys.Up, Keys.Down);
 
-         
+            //Bakgrunder
+
+            backGround1 = new Background(Content.Load<Texture2D>("Menu/Background"), new Vector2(220, 200), new Rectangle(220, 200, 40, 40), false);
+
+            backGround2 = new Background(Content.Load<Texture2D>("Menu/BackGround2"), new Vector2(300, 200), new Rectangle(300, 200, 40, 40), false);
+
+            backGround3 = new Background(Content.Load<Texture2D>("Menu/BackGround3"), new Vector2(380, 200), new Rectangle(380, 200, 40, 40), false);
+
+            backGround4 = new Background(Content.Load<Texture2D>("Menu/BackGround4"), new Vector2(460, 200), new Rectangle(460, 200, 40, 40), false);
+
+            backGround5 = new Background(Content.Load<Texture2D>("Menu/BackGround5"), new Vector2(540, 200), new Rectangle(540, 200, 40, 40), false);
+
             score1 = new Score(Content.Load<SpriteFont>("SpriteFont/Score1"), new Vector2(150, 15), false);
 
             ball1 = new Ball(Content.Load<Texture2D>("Ball"), new Vector2((Window.ClientBounds.Width / 2) - 5, (Window.ClientBounds.Height / 2) - 5));
-
-            backGround1 = new Background(Content.Load<Texture2D>("BackGround"), new Vector2(0, 0));
 
             menuScreen = new Meny(Content.Load<Texture2D>("Menu/Menu"), new Vector2(0, 0), true);
 
@@ -177,7 +188,10 @@ namespace Pong
         protected override void Update(GameTime gameTime)
         {
 
-            if (menuScreen.GameState != true)
+            backGround1.Update();
+            menuScreen.Update(backGround1);
+
+            if (menuScreen.GameState == false)
             {             
                 if (score1.Pause == false)
                 {
@@ -207,6 +221,7 @@ namespace Pong
 
             }
 
+
                 base.Update(gameTime);         
         }
         /// <summary>
@@ -232,9 +247,22 @@ namespace Pong
 
             spriteBatch.Begin();
 
-            menuScreen.Draw(spriteBatch);
+            if (menuScreen.GameState == true)
+            {
+                menuScreen.Draw(spriteBatch);
 
-            if (menuScreen.GameState != true)
+                backGround1.Draw(spriteBatch);
+
+                backGround2.Draw(spriteBatch);
+
+                backGround3.Draw(spriteBatch);
+
+                backGround4.Draw(spriteBatch);
+
+                backGround5.Draw(spriteBatch);
+            }
+
+            if (menuScreen.GameState == false)
             {
                 backGround1.Draw(spriteBatch);
 
@@ -245,6 +273,7 @@ namespace Pong
                 ball1.Draw(spriteBatch);
 
                 score1.Draw(spriteBatch, Window);
+
             }
 
             spriteBatch.End();

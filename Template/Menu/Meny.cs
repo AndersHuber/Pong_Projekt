@@ -17,10 +17,9 @@ namespace Pong
             this.meny = meny;
             this.menyPos = menyPos;
             this.gameState = gameState;
-
         }
 
-        public Texture2D _Meny
+        public Texture2D Menu
         {
             get { return meny; }
             set { meny = value; }
@@ -36,6 +35,15 @@ namespace Pong
         {
             get { return gameState; }
             set { gameState = value; }
+        }
+
+        public void Update(Background backGround1)
+        {
+            if(backGround1.Intersect == true)
+            {
+                gameState = false;
+            }
+
         }
 
         public void Draw(SpriteBatch spriteBatch)

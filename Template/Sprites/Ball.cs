@@ -33,12 +33,12 @@ namespace Pong
 
             if (tal == 1)
             {
-                velocity = new Vector2(-4, -4);
+                velocity = new Vector2(-9, -9);
             }
 
             if (tal == 2)
             {
-                velocity = new Vector2(4, 4);
+                velocity = new Vector2(9, 9);
             }
  
         }
