@@ -51,7 +51,7 @@ namespace Pong
 
 
 
-                ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 5, (Window.ClientBounds.Height / 2) - 5);
+                ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 20, (Window.ClientBounds.Height / 2) - 20);
 
 
 
@@ -72,7 +72,7 @@ namespace Pong
 
 
 
-                ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 5, (Window.ClientBounds.Height / 2) - 5);
+                ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 20, (Window.ClientBounds.Height / 2) - 20);
 
 
 

@@ -37,9 +37,9 @@ namespace Pong
             set { gameState = value; }
         }
 
-        public void Update(Background backGround1)
+        public void Update(Background backGround1, Background backGround2, Background backGround3, Background backGround4, Background backGround5)
         {
-            if(backGround1.Intersect == true)
+            if(backGround1.Intersect == 1 || backGround2.Intersect == 2 || backGround3.Intersect == 3 || backGround4.Intersect == 4 || backGround5.Intersect == 5 )
             {
                 gameState = false;
             }

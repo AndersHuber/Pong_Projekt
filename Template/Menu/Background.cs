@@ -7,19 +7,22 @@ namespace Pong
     class Background
     {
         private Texture2D backGround;
-        private Vector2 backGroundPos;
+        private Vector2 backGroundPos, fontPos;
         private Rectangle backGroundHitbox;
-        private bool intersect, b1, b2, b3, b4, b5;
-        private MouseState state;
-        private Point mousePos;
-        
+        private int intersect;
+        private SpriteFont backGroundFont;
 
-        public Background(Texture2D backGround, Vector2 backGroundPos, Rectangle backGroundHitbox, bool Intersect)
+        public Background(Texture2D backGround, Vector2 backGroundPos, Rectangle backGroundHitbox, int Intersect)
         {
             this.backGround = backGround;
             this.backGroundPos = backGroundPos;
             this.intersect = Intersect;
-            this.backGroundHitbox = backGroundHitbox;
+            this.backGroundHitbox = backGroundHitbox;        
+        }
+
+        public Background(SpriteFont backGroundFont)
+        {
+            this.backGroundFont = backGroundFont;
         }
 
         public Texture2D BackGround
@@ -34,42 +37,41 @@ namespace Pong
             set { backGroundPos = value; }
         }
 
+        public Vector2 FontPos
+        {
+            get { return fontPos; }
+            set { fontPos = value; }
+
+        }
+
         public Rectangle BackGroundHitbox
         {
             get { return backGroundHitbox; }
             set { backGroundHitbox = value; }
         }
 
-        public bool Intersect
+        public int Intersect
         {
             get { return intersect; }
             set { intersect = value; }
         }
 
-        public void Update()
-        {
-
-            state = Mouse.GetState();
-            mousePos = new Point(state.X, state.Y);
-
-            if (backGroundHitbox.Contains(mousePos))
-            {
-                if (state.LeftButton == ButtonState.Pressed)
-                {
-                    intersect = true;
-                }
-
-            }
-
-            backGroundHitbox.Location = backGroundPos.ToPoint();
-                      
-        }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backGround, BackGroundHitbox, Color.White);
+
         }
 
+        public void Draw2(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(backGroundFont, "Choose BackGround", new Vector2(180, 100), Color.Black);
+        }
+
+        public void Draw3(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(backGroundFont, "Loading", new Vector2(315, 200), Color.Black);
+            spriteBatch.DrawString(backGroundFont, "Be Ready!", new Vector2(295, 300), Color.Black);
+        }
 
     }
 }
