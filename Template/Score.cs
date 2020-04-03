@@ -42,14 +42,14 @@ namespace Pong
 
 
 
-        public void Update(Paddle leftPaddle, Paddle rightPaddle, Ball ball1, GameWindow Window)
+        public void Update(Paddle leftPaddle, Paddle rightPaddle, Ball ball1, GameWindow Window, Bonus box)
         {
 
             if (ball1.BallPos.X >= 785)
             {
                 Score_1++;
-
-
+                box.Intersect = 0;
+       
 
                 ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 20, (Window.ClientBounds.Height / 2) - 20);
 
@@ -69,6 +69,7 @@ namespace Pong
             {
 
                 Score_2++;
+                box.Intersect = 0;
 
 
 

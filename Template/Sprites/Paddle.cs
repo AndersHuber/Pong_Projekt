@@ -32,19 +32,20 @@ namespace Pong
         private Keys Up, Down;
 
 
-        public Paddle(Texture2D paddel, Vector2 paddlePos, Keys Up, Keys Down)
+        public Paddle(Texture2D paddel, Vector2 paddlePos, Rectangle paddleHitbox, Keys Up, Keys Down)
         {
             paddle = paddel;
             this.paddlePos = paddlePos;
             this.Up = Up;
             this.Down = Down;
+            this.paddleHitbox = paddleHitbox;
         }
 
 
         public Rectangle PaddleHitbox
         {
 
-            get { return new Rectangle((int)paddlePos.X, (int)paddlePos.Y, 21, 148); }
+            get { return paddleHitbox; }
             set { paddleHitbox = value; }
 
         }
@@ -96,7 +97,7 @@ namespace Pong
         {
 
 
-            spriteBatch.Draw(paddle, paddlePos, Color.White);
+            spriteBatch.Draw(paddle, paddleHitbox, Color.White);
            
 
 

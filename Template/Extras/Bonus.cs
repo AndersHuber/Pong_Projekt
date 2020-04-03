@@ -14,12 +14,14 @@ namespace Pong
         private Texture2D bonus;
         private Vector2 bonusPos;
         private Rectangle bonusHitbox;
+        private int intersect;
 
-        public Bonus(Texture2D bonus, Vector2 bonusPos, Rectangle bonusHitbox)
+        public Bonus(Texture2D bonus, Vector2 bonusPos, Rectangle bonusHitbox, int intersect)
         {
             this.bonus = bonus;
             this.bonusPos = bonusPos;
             this.bonusHitbox = bonusHitbox;
+            this.intersect = intersect;
         }
 
         public Texture2D Bonus1
@@ -40,9 +42,29 @@ namespace Pong
             set { bonusHitbox = value; }
         }
 
+        public int Intersect
+        {
+            get { return intersect; }
+            set { intersect = value; }
+        }
+
         public void Update(Ball ball1)
         {
             bonusHitbox = new Rectangle(1300, 1500, 50, 50);
+        }
+
+        public void UpdateIntersect(Ball ball1, Paddle leftPaddle, Paddle rightPaddle)
+        {
+            if(ball1.BallHitbox.Intersects(leftPaddle.PaddleHitbox))
+            {
+                intersect = 2;
+            }
+
+            if (ball1.BallHitbox.Intersects(rightPaddle.PaddleHitbox))
+            {
+                intersect = 1;
+            }
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
