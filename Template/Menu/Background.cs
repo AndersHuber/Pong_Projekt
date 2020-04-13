@@ -12,6 +12,7 @@ namespace Pong
         private int intersect;
         private SpriteFont backGroundFont;
 
+
         public Background(Texture2D backGround, Vector2 backGroundPos, Rectangle backGroundHitbox, int Intersect)
         {
             this.backGround = backGround;

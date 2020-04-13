@@ -14,9 +14,12 @@ namespace Pong
         private Texture2D bonus;
         private Vector2 bonusPos;
         private Rectangle bonusHitbox;
-        private int intersect;
+        private int intersect2;
+        private bool intersect;
+        private Random random = new Random();
+        private double timer;
 
-        public Bonus(Texture2D bonus, Vector2 bonusPos, Rectangle bonusHitbox, int intersect)
+        public Bonus(Texture2D bonus, Vector2 bonusPos, Rectangle bonusHitbox, bool intersect)
         {
             this.bonus = bonus;
             this.bonusPos = bonusPos;
@@ -42,27 +45,26 @@ namespace Pong
             set { bonusHitbox = value; }
         }
 
-        public int Intersect
+        public bool Intersect
         {
             get { return intersect; }
             set { intersect = value; }
         }
 
-        public void Update(Ball ball1)
+        public void Update(Ball ball1, GameTime gameTime)
         {
-            bonusHitbox = new Rectangle(1300, 1500, 50, 50);
-        }
+            timer += gameTime.ElapsedGameTime.TotalSeconds;
 
-        public void UpdateIntersect(Ball ball1, Paddle leftPaddle, Paddle rightPaddle)
-        {
-            if(ball1.BallHitbox.Intersects(leftPaddle.PaddleHitbox))
+            if (timer == 5)
             {
-                intersect = 2;
+                bonusHitbox = new Rectangle(random.Next(30, 750), random.Next(30, 450), 50, 50);
+                timer = 0;
             }
 
-            if (ball1.BallHitbox.Intersects(rightPaddle.PaddleHitbox))
+            if (ball1.BallHitbox.Intersects(bonusHitbox))
             {
-                intersect = 1;
+                intersect = true;
+                bonusPos = new Vector2(1000, 1000);
             }
 
         }
@@ -72,6 +74,6 @@ namespace Pong
             spriteBatch.Draw(bonus, bonusHitbox, Color.White);
         }
 
-
     }
+
 }

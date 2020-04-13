@@ -15,9 +15,9 @@ namespace Pong
         private int Score_1, Score_2 = 0;
         private SpriteFont font;
         private Vector2 fontPos;
-        private bool pause;
+        private bool pause, newRound, startRound;
+        private double timer;
   
-
 
         public Score(SpriteFont nummer, Vector2 fontPos, bool pause)
         {
@@ -40,54 +40,84 @@ namespace Pong
 
         }
 
-
-
-        public void Update(Paddle leftPaddle, Paddle rightPaddle, Ball ball1, GameWindow Window, Bonus box)
+        public double Timer
         {
+            get { return timer; }
+            set { timer = value; }
+        }
 
-            if (ball1.BallPos.X >= 785)
+        public bool NewRound
+        {
+            get { return newRound; }
+            set { newRound = value; }
+        }
+
+        public bool StartRound
+        {
+            get { return startRound; }
+            set { startRound = value; }
+        }
+
+
+        public void Update(Paddle leftPaddle, Paddle rightPaddle, Ball ball1, GameWindow Window, Bonus box, GameTime gameTime)
+        {
+            if (ball1.BallPos.X <= 0 || ball1.BallPos.X >= 785)
             {
-                Score_1++;
-                box.Intersect = 0;
-       
-
-                ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 20, (Window.ClientBounds.Height / 2) - 20);
-
-
-
-                leftPaddle.PaddlePos = new Vector2(0, 340);
-
-
-
-                rightPaddle.PaddlePos = new Vector2(779, 340);
-
-
+                newRound = true;
             }
 
-            if (ball1.BallPos.X <= 0)
-
+            if (newRound == false)
             {
-
-                Score_2++;
-                box.Intersect = 0;
-
-
-
-                ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 20, (Window.ClientBounds.Height / 2) - 20);
-
-
-
-                leftPaddle.PaddlePos = new Vector2(0, 340);
-
-
-
-                rightPaddle.PaddlePos = new Vector2(779, 340);
-
+                startRound = true;
             }
 
-     
+                if (ball1.BallPos.X >= 785)
+                {
 
-    }
+                    Score_1++;
+                    box.Intersect = false;
+
+                    ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 20, (Window.ClientBounds.Height / 2) - 20);
+
+                    leftPaddle.PaddlePos = new Vector2(0, 340);
+                    rightPaddle.PaddlePos = new Vector2(779, 340);
+
+                    leftPaddle.PaddleHitbox = new Rectangle((int)leftPaddle.PaddlePos.X, (int)leftPaddle.PaddlePos.Y, 21, 148);
+                    rightPaddle.PaddleHitbox = new Rectangle((int)rightPaddle.PaddlePos.X, (int)rightPaddle.PaddlePos.Y, 21, 148);
+
+                }
+
+                if (ball1.BallPos.X <= 0)
+                {
+                    Score_2++;
+
+                    box.Intersect = false;
+
+                    ball1.BallPos = new Vector2((Window.ClientBounds.Width / 2) - 20, (Window.ClientBounds.Height / 2) - 20);
+
+                    leftPaddle.PaddlePos = new Vector2(0, 340);
+                    rightPaddle.PaddlePos = new Vector2(779, 340);
+
+                    leftPaddle.PaddleHitbox = new Rectangle((int)leftPaddle.PaddlePos.X, (int)leftPaddle.PaddlePos.Y, 21, 148);
+                    rightPaddle.PaddleHitbox = new Rectangle((int)rightPaddle.PaddlePos.X, (int)rightPaddle.PaddlePos.Y, 21, 148);
+
+                }
+
+            if(newRound == true)
+            {
+                timer += gameTime.ElapsedGameTime.TotalSeconds;
+                startRound = false;
+
+                if (timer >= 3)
+                {
+                    timer = 0;
+                    newRound = false;
+                    startRound = true;
+                }
+            }
+
+
+        }
 
 
 

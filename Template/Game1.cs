@@ -44,11 +44,13 @@ namespace Pong
         private MouseState state;
         private Point mousePos;
 
-        private double timer;
+        private double globalTimer;
 
         private Song backGroundSound;
 
         private Bonus box;
+
+        
 
         public Game1()
         {
@@ -121,8 +123,8 @@ namespace Pong
 
       
             //Ger objekten värden, en Texture2D, positioner samt input för tangentbord
-            leftPaddle = new Paddle(Content.Load<Texture2D>("Paddle"),new Vector2(0, 340), new Rectangle(0, 340, 21, 148), Keys.W, Keys.S);
-            rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(779, 340), new Rectangle(779, 340, 21, 148), Keys.Up, Keys.Down);
+            leftPaddle = new Paddle(Content.Load<Texture2D>("Paddle"),new Vector2(0, 340), new Rectangle(0, 340, 21, 148), Keys.W, Keys.S, false);
+            rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(779, 340), new Rectangle(779, 340, 21, 148), Keys.Up, Keys.Down, false);
 
             //Bakgrunder
 
@@ -146,7 +148,7 @@ namespace Pong
 
             menuScreen = new Meny(Content.Load<Texture2D>("Menu/Menu"), new Vector2(0, 0), true);
 
-            box = new Bonus(Content.Load<Texture2D>("Bonus/Bonus"), new Vector2(200, 200), new Rectangle(200, 100, 50, 50), 0);
+            box = new Bonus(Content.Load<Texture2D>("Bonus/Bonus"), new Vector2(200, 200), new Rectangle(200, 100, 50, 50), false);
 
             // Create a new SpriteBatch, which can be used to draw textures.
 
@@ -209,7 +211,7 @@ namespace Pong
 
             if (menuScreen.GameState == false)
             {
-                timer += gameTime.ElapsedGameTime.TotalSeconds;
+                globalTimer += gameTime.ElapsedGameTime.TotalSeconds;
             }
 
                 state = Mouse.GetState();
@@ -242,14 +244,18 @@ namespace Pong
 
             menuScreen.Update(backGround1, backGround2, backGround3, backGround4, backGround5);
 
-            if (score1.Pause == false && timer > 8)
+            if (score1.Pause == false && globalTimer > 8)
             {
-                score1.Update(leftPaddle, rightPaddle, ball1, Window, box);
 
-                //Update metoder som ständigt anropas från respektive klasser
-                ball1.Update();
-                leftPaddle.Update();
-                rightPaddle.Update();
+                score1.Update(leftPaddle, rightPaddle, ball1, Window, box, gameTime);
+
+                if (score1.StartRound == true)
+                {
+                    //Update metoder som ständigt anropas från respektive klasser
+                    ball1.Update();
+                    leftPaddle.Update(box);
+                    rightPaddle.Update(box);
+                }
 
 
                 //Bollens kolission med paddlarna, anropar boll klassen ifall true
@@ -266,21 +272,30 @@ namespace Pong
 
                 }
 
-                if (ball1.BallHitbox.Intersects(box.BonusHitbox))
+                    box.Update(ball1, gameTime);
+
+                if (ball1.BallHitbox.Intersects(leftPaddle.PaddleHitbox))
                 {
-                    box.Update(ball1);
+                    leftPaddle.Intersect = true;
+                    rightPaddle.Intersect = false;
                 }
 
-                box.UpdateIntersect(ball1, leftPaddle, rightPaddle);
-
-                if (box.Intersect == 2 && ball1.BallHitbox.Intersects(box.BonusHitbox))
+                if (ball1.BallHitbox.Intersects(rightPaddle.PaddleHitbox))
                 {
-                    rightPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(779, 340), new Rectangle((int)rightPaddle.PaddlePos.X, (int)rightPaddle.PaddlePos.Y, 21, 79), Keys.Up, Keys.Down);
+                    rightPaddle.Intersect = true;
+                    leftPaddle.Intersect = false;
                 }
 
-                if (box.Intersect == 1 && ball1.BallHitbox.Intersects(box.BonusHitbox))
+                if (leftPaddle.Intersect == true && box.Intersect == true)
                 {
-                    leftPaddle = new Paddle(Content.Load<Texture2D>("Paddle"), new Vector2(0, 340), new Rectangle((int)leftPaddle.PaddlePos.X, (int)leftPaddle.PaddlePos.Y, 21, 79), Keys.W, Keys.S);
+                    rightPaddle.PaddleHitbox = new Rectangle((int)rightPaddle.PaddlePos.X, (int)rightPaddle.PaddlePos.Y, 21, 79);
+                    box.Intersect = false;
+                }
+
+                if (rightPaddle.Intersect == true && box.Intersect == true)
+                {
+                    leftPaddle.PaddleHitbox = new Rectangle((int)leftPaddle.PaddlePos.X, (int)leftPaddle.PaddlePos.Y, 21, 79);
+                    box.Intersect = false;
                 }
 
             }
@@ -330,13 +345,13 @@ namespace Pong
 
             }
 
-            if(timer > 0 && timer < 5)
+            if(globalTimer > 0 && globalTimer < 5)
             {
                 backGroundFont2.Draw3(spriteBatch);
             }
 
 
-                if (menuScreen.GameState == false && timer > 5)
+                if (menuScreen.GameState == false && globalTimer > 5)
                 {
                     if (backGround1.Intersect == 1)
                     {
@@ -380,6 +395,7 @@ namespace Pong
                 score1.Draw(spriteBatch, Window);
 
                 box.Draw(spriteBatch);
+
             }
 
             spriteBatch.End();
