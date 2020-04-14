@@ -85,6 +85,7 @@ namespace Pong
                     leftPaddle.PaddleHitbox = new Rectangle((int)leftPaddle.PaddlePos.X, (int)leftPaddle.PaddlePos.Y, 21, 148);
                     rightPaddle.PaddleHitbox = new Rectangle((int)rightPaddle.PaddlePos.X, (int)rightPaddle.PaddlePos.Y, 21, 148);
 
+                    box.BonusPos = new Vector2(200, 200);
                 }
 
                 if (ball1.BallPos.X <= 0)
@@ -101,8 +102,10 @@ namespace Pong
                     leftPaddle.PaddleHitbox = new Rectangle((int)leftPaddle.PaddlePos.X, (int)leftPaddle.PaddlePos.Y, 21, 148);
                     rightPaddle.PaddleHitbox = new Rectangle((int)rightPaddle.PaddlePos.X, (int)rightPaddle.PaddlePos.Y, 21, 148);
 
+                    box.BonusPos = new Vector2(200, 200);
+    
                 }
-
+    
             if(newRound == true)
             {
                 timer += gameTime.ElapsedGameTime.TotalSeconds;

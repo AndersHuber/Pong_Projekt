@@ -14,9 +14,11 @@ namespace Pong
         private Texture2D bonus;
         private Vector2 bonusPos;
         private Rectangle bonusHitbox;
-        private int intersect2;
         private bool intersect;
-        private Random random = new Random();
+        private Random boxLocation = new Random();
+        private Random boxContent = new Random();
+        private Random paddlePos = new Random();
+        private int content;
         private double timer;
 
         public Bonus(Texture2D bonus, Vector2 bonusPos, Rectangle bonusHitbox, bool intersect)
@@ -51,21 +53,37 @@ namespace Pong
             set { intersect = value; }
         }
 
-        public void Update(Ball ball1, GameTime gameTime)
+        public Random BoxContent
+        {
+            get { return boxContent; }
+            set { boxContent = value; }
+        }
+
+        public void Update(Ball ball1, GameTime gameTime, Paddle leftPaddle, Paddle rightPaddle)
         {
             timer += gameTime.ElapsedGameTime.TotalSeconds;
+            content = boxContent.Next(1, 3);
 
-            if (timer == 5)
+            if (timer > 3)
             {
-                bonusHitbox = new Rectangle(random.Next(30, 750), random.Next(30, 450), 50, 50);
+                bonusPos = new Vector2(boxLocation.Next(0, 785), boxLocation.Next(0, 480));
                 timer = 0;
             }
 
-            if (ball1.BallHitbox.Intersects(bonusHitbox))
+            if (ball1.BallHitbox.Intersects(bonusHitbox) && content == 1)
             {
                 intersect = true;
-                bonusPos = new Vector2(1000, 1000);
+                leftPaddle.PaddlePos = new Vector2((int)leftPaddle.PaddlePos.X, paddlePos.Next(1, 480));
             }
+
+            if (ball1.BallHitbox.Intersects(bonusHitbox) && content == 2)
+            {
+                intersect = true;
+                leftPaddle.PaddlePos = new Vector2((int)leftPaddle.PaddlePos.X, paddlePos.Next(1,480));
+            }
+
+
+            bonusHitbox.Location = bonusPos.ToPoint();
 
         }
 
