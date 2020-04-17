@@ -70,18 +70,10 @@ namespace Pong
                 timer = 0;
             }
 
-            if (ball1.BallHitbox.Intersects(bonusHitbox) && content == 1)
+            if(ball1.BallHitbox.Intersects(bonusHitbox))
             {
                 intersect = true;
-                leftPaddle.PaddlePos = new Vector2((int)leftPaddle.PaddlePos.X, paddlePos.Next(1, 480));
             }
-
-            if (ball1.BallHitbox.Intersects(bonusHitbox) && content == 2)
-            {
-                intersect = true;
-                leftPaddle.PaddlePos = new Vector2((int)leftPaddle.PaddlePos.X, paddlePos.Next(1,480));
-            }
-
 
             bonusHitbox.Location = bonusPos.ToPoint();
 

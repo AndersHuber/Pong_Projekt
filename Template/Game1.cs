@@ -245,14 +245,18 @@ namespace Pong
 
                 if (leftPaddle.Intersect == true && box.Intersect == true)
                 {
-                    rightPaddle.PaddleHitbox = new Rectangle((int)rightPaddle.PaddlePos.X, (int)rightPaddle.PaddlePos.Y, 21, 79);
+                    rightPaddle.PaddleHitbox = new Rectangle((int)rightPaddle.PaddlePos.X, (int)rightPaddle.PaddlePos.Y, 21, 80);
                     box.Intersect = false;
+                    rightPaddle.Small = true;
+                    rightPaddle.Big = false;
                 }
 
                 if (rightPaddle.Intersect == true && box.Intersect == true)
                 {
-                    leftPaddle.PaddleHitbox = new Rectangle((int)leftPaddle.PaddlePos.X, (int)leftPaddle.PaddlePos.Y, 21, 79);
+                    leftPaddle.PaddleHitbox = new Rectangle((int)leftPaddle.PaddlePos.X, (int)leftPaddle.PaddlePos.Y, 21, 80);
                     box.Intersect = false;
+                    leftPaddle.Small = true;
+                    leftPaddle.Big = false;
                 }
                 #endregion
 

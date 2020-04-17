@@ -30,7 +30,8 @@ namespace Pong
         private Rectangle paddleHitbox;
         private KeyboardState kstate;
         private Keys Up, Down;
-        private bool intersect;
+        private bool intersect, small;
+        private bool big = true;
 
 
         public Paddle(Texture2D paddel, Vector2 paddlePos, Rectangle paddleHitbox, Keys Up, Keys Down, bool intersect)
@@ -66,6 +67,19 @@ namespace Pong
             set { intersect = value; }
         }
 
+        public bool Small
+        {
+            get { return small; }
+            set { small = value; }
+        }
+
+        public bool Big
+        {
+            get { return big; }
+            set { big = value; }
+        }
+
+
 
         public void Update(Bonus box)
         {
@@ -82,23 +96,7 @@ namespace Pong
                 paddlePos.Y += fart;
             }
 
-            if (box.Intersect == false)
-            {
-                if (paddlePos.Y < 0)
-                {
-
-                    paddlePos.Y = 0;
-
-                }
-
-                if (paddlePos.Y > 401)
-                {
-
-                    paddlePos.Y = 401;
-                }
-            }
-
-            if (box.Intersect == true)
+            if (Big == true)
             {
                 if (paddlePos.Y < 0)
                 {
@@ -111,6 +109,23 @@ namespace Pong
                 {
 
                     paddlePos.Y = 332;
+                }
+
+            }
+
+            if (small == true)
+            {
+                if (paddlePos.Y < 0)
+                {
+
+                    paddlePos.Y = 0;
+
+                }
+
+                if (paddlePos.Y > 400)
+                {
+
+                    paddlePos.Y = 400;
                 }
             }
 
