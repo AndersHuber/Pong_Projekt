@@ -1,26 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Pong
 {
     class Bonus
     {
+        //Variabler för bonusens egenskaper
+        #region Egenskaper och variabler
         private Texture2D bonus;
         private Vector2 bonusPos;
         private Rectangle bonusHitbox;
         private bool intersect;
+
+        //Slumpgeneratorer för bonusens position och innehåll
         private Random boxLocation = new Random();
         private Random boxContent = new Random();
-        private Random paddlePos = new Random();
+
+        //Timer och innehåll i själva bonusen
         private int content;
         private double timer;
+        #endregion
 
+        //Konstruktor som tar bonusens egenskaper som parametrar
+        #region Konstrukor
         public Bonus(Texture2D bonus, Vector2 bonusPos, Rectangle bonusHitbox, bool intersect)
         {
             this.bonus = bonus;
@@ -28,7 +31,10 @@ namespace Pong
             this.bonusHitbox = bonusHitbox;
             this.intersect = intersect;
         }
+        #endregion
 
+        //Get set metoder för att kunna använda bonusens egenskaper utanför klassen
+        #region Get / set metoder
         public Texture2D Bonus1
         {
             get { return bonus; }
@@ -58,8 +64,11 @@ namespace Pong
             get { return boxContent; }
             set { boxContent = value; }
         }
+        #endregion
 
-        public void Update(Ball ball1, GameTime gameTime, Paddle leftPaddle, Paddle rightPaddle)
+        //Update metod som flyttar bonusens position var 3:de sekund samt kollar ifall bonusen har blivit intersectad
+        #region Update metod
+        public void Update(Ball ball1, GameTime gameTime)
         {
             timer += gameTime.ElapsedGameTime.TotalSeconds;
             content = boxContent.Next(1, 3);
@@ -78,11 +87,15 @@ namespace Pong
             bonusHitbox.Location = bonusPos.ToPoint();
 
         }
+        #endregion
 
+        //Ritar ut bonusen
+        #region Draw metod
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(bonus, bonusHitbox, Color.White);
         }
+        #endregion
 
     }
 

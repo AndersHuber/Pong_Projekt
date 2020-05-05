@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-
-using Microsoft.Xna.Framework.Input;
-
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Pong
@@ -25,6 +18,7 @@ namespace Pong
         private int tal;
 
         //Konstruktor som tar Texture2D och position som parametrar
+        #region Konstruktor
         public Ball(Texture2D ball, Vector2 ballPos)
         {
            //Instansvariablerna ska vara lika med konstruktorns parametrar
@@ -44,48 +38,43 @@ namespace Pong
             {
                 velocity = new Vector2(8, 8);
             }
- 
         }
+        #endregion
 
         //Get, Set metoder som returnerar variablerna och sätter deras värden
+        #region Get / set metoder
         public Texture2D Boll
         {
-
             get { return ball; }
             set { ball = value; }
-
         }
 
         public Vector2 BallPos
         {
-
             get { return ballPos; }
             set { ballPos = value; }
-
         }
 
-        //Sätter ballHitboxens värde i rektangeln
+        //Returnera ballhitboxens värde
         public Rectangle BallHitbox
         {
-
             get { return new Rectangle((int)ballPos.X, (int)ballPos.Y, 19, 19); }
             set { ballHitbox = value; }
-
         }
-
+        #endregion
 
         //Ifall main anropar denna så har bollen träffat en paddel och paddelns x hastighet multipliceras med -1 och alltså går åt vänster
+        #region kolission metod
         public void Colission()
         {
             velocity.X *= -1;
-
         }
-
+        #endregion
 
         //Bollens hastighet, riktning och begränsningar
+        #region Update metod
         public void Update()
         {
-
             //Bollpositionen ökar med +8 eller -8  hela tiden
              ballPos.X += velocity.X;
              ballPos.Y += velocity.Y;
@@ -103,16 +92,16 @@ namespace Pong
 
             //Bollhitboxen ska ha boll positionen
             ballHitbox.Location = ballPos.ToPoint();
-
         }
+        #endregion
 
         //Main anropar metoden för att rita ut bollen, tar texturen, positionen och färgen
+        #region Draw metod
         public void Draw(SpriteBatch spriteBatch)
         {
-
             spriteBatch.Draw(ball, ballPos, Color.White);
-
         }
+        #endregion
 
 
 
