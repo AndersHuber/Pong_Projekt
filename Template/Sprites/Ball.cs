@@ -2,6 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+/// <summary>
+/// Boll klassen. Här kollas alla bollens egenskaper. Alltså när den kolliderar med "taket" så blir farten multiplicerad med minus på y-värdet
+/// så att bollen åker ned/upp. - * - = +, + * - = -. Ifall bollen träffar paddlarna så händer samma sak fast farten(x-värdet) multipliceras med -1.
+/// Det är i main klassen som bollen checkas ifall bollen har träffat paddlarna eller ej, inte här. 
+/// </summary>
+
+
 namespace Pong
 
 {

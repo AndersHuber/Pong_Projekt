@@ -2,6 +2,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+/// <summary>
+/// Bonus klassen som spawnar bonusen på random ställe på skärmen var 3:e sekund. Kollar också kollision mellan bonus och boll.
+/// </summary>
+
 namespace Pong
 {
     class Bonus

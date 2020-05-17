@@ -1,6 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+
+/// <summary>
+/// Inget speciellt, här ritas bara bakgrunderna ut samt texten till menyn. 
+/// </summary>
+
 namespace Pong
 {
     class Background

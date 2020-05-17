@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+/// <summary>
+/// Klass som resettar spelet. Alltså bara skickar tillbaka alla objekt till deras ursprungliga position. Sen har score klassen en timer
+/// som lägger en paus efter varje runda på 3 sekunder. 
+/// </summary>
 
 namespace Pong
 {

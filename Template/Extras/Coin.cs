@@ -1,6 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+/// <summary>
+/// Coin classen spawnar flera mynt i bakgrunden av huvudmenyn och dessa mynt faller ner som regn. Jag lägger till mynten i en lista, som jag har i main.
+/// Myntobjekten skapar jag i main. Jag sätter en for loop samt en timer som gör att mynten spawnar varje sekund, sen använder jag en for loop i draw,
+/// som ritar ut alla mynten. Ifall myntlistan blir större än 19 objekt tas det 19:e objektet bort.
+/// </summary>
+
 namespace Pong
 {
     class Coin
@@ -59,11 +65,10 @@ namespace Pong
         }
         #endregion
 
-
         //Draw metod som ritar ut myntet
         public void Draw(SpriteBatch spriteBatch)
         {
-                spriteBatch.Draw(coinTexture, coinHitbox, Color.White);
+            spriteBatch.Draw(coinTexture, coinHitbox, Color.White);
         }
     }
 }

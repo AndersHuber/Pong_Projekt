@@ -2,9 +2,13 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
+/// <summary>
+/// Paddel klassen. Här uppdateras paddlarnas position som checkas i update metoden. Det är också här som  update metoden kollar vilken tangent som är nedtryckt.
+/// Paddlarnas restriktioner checkas också i update metoden. Update metoden kollar också ifall paddeln är stor eller liten och ändrar restriktionerna utifrån det. 
+/// </summary>
+
 namespace Pong
 {
-
     class Paddle
     {   
         //Klassvariabler

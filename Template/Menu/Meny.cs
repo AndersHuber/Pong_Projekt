@@ -1,6 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+/// <summary>
+/// Meny klassen. Här kollas bra att man tryckt ned en bakgrund, sen ritas den bakgrunden ut beroende på vilken bakgrund som är true.
+/// När man väl tryckt ned en bakgrund kollas detta och menyn försvinner.
+/// </summary>
+
 namespace Pong
 {
     class Meny
