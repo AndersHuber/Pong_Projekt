@@ -78,11 +78,13 @@ namespace Pong
         }
         #endregion
 
-        //Bollens hastighet, riktning och begränsningar
+        /// <summary>
+        ///  Bollens hastighet, riktning och begränsningar  kollas/uppdateras här. Bollpositionen ökar med +8 eller -8  hela tiden genom att man adderar eller
+        ///  subtraherar 8 från bollpositionen hela tiden. 
+        /// </summary>
         #region Update metod
         public void Update()
         {
-            //Bollpositionen ökar med +8 eller -8  hela tiden
              ballPos.X += velocity.X;
              ballPos.Y += velocity.Y;
              

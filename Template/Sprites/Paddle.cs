@@ -73,7 +73,12 @@ namespace Pong
         }
         #endregion
 
-        //update metoden
+        /// <summary>
+        /// Här uppdateras bara paddelns position. Datorn kollar vilken tangent som är nedtryckt och addar eller subtraherar fart(5) från Y positionen.
+        /// Boolean variabeln på paddel objekten kollar också ifall den är stor eller liten, här regleras detta så att inte paddlarna kan gå utanför skärmen
+        /// när ena paddeln är stor och andra liten.
+        /// </summary>
+        /// <param name="box"></param>
         #region Update metod
         public void Update(Bonus box)
         {

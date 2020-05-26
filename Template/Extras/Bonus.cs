@@ -19,7 +19,6 @@ namespace Pong
 
         //Slumpgeneratorer för bonusens position och innehåll
         private Random boxLocation = new Random();
-        private Random boxContent = new Random();
 
         //Timer och innehåll i själva bonusen
         private int content;
@@ -62,20 +61,16 @@ namespace Pong
             get { return intersect; }
             set { intersect = value; }
         }
-
-        public Random BoxContent
-        {
-            get { return boxContent; }
-            set { boxContent = value; }
-        }
         #endregion
 
-        //Update metod som flyttar bonusens position var 3:de sekund samt kollar ifall bonusen har blivit intersectad
+        /// <summary>
+        ///  Update metod som flyttar bonusens position var 3:de sekund samt kollar ifall bonusen har blivit intersectad. Den flyttas till random position
+        ///  och timern resettas och alltså börjar den om igen.
+        /// </summary>
         #region Update metod
         public void Update(Ball ball1, GameTime gameTime)
         {
             timer += gameTime.ElapsedGameTime.TotalSeconds;
-            content = boxContent.Next(1, 3);
 
             if (timer > 3)
             {

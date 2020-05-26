@@ -65,8 +65,10 @@ namespace Pong
         #endregion
 
 
-        //Update metod som "resettar" spelets state tillbaka till ursprung, kollar också ifall bollen är utanför skärmen
-        //Har också timer för att pausa mellan ronderna
+        /// <summary>
+        ///  Update metod som "resettar" spelets state tillbaka till ursprung, kollar också ifall bollen är utanför skärmen(hela tiden)
+        ///  Har också timer för att pausa mellan ronderna efter bollen gått bakom respektive sida går denna timer av och varar i 3 sekunder.
+        /// </summary>
         #region Update metod
         public void Update(Paddle leftPaddle, Paddle rightPaddle, Ball ball1, GameWindow Window, Bonus box, GameTime gameTime)
         {
